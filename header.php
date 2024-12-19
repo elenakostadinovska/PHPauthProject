@@ -1,4 +1,5 @@
 <?php
+define('BASE_URL', '/php/'); // Replace with your actual app root path
 $isLoggedIn = isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true;
 $username = $isLoggedIn ? $_SESSION["username"] : null;
 ?>
@@ -85,9 +86,10 @@ $username = $isLoggedIn ? $_SESSION["username"] : null;
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg custom-navbar header">
     <div class="container-fluid">
-        <a class="navbar-brand brand-title" href="#">
-            <img src="./images/logo.png" alt="Logo">
-        </a>
+    <a class="navbar-brand brand-title" href="<?php echo BASE_URL; ?>welcome.php">
+    <img src="<?php echo BASE_URL; ?>images/logo.png" alt="Logo" class="d-inline-block align-text-top">
+</a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
