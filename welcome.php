@@ -16,7 +16,15 @@ $count_query = "SELECT COUNT(*) as total FROM students";
 $result = mysqli_query($link, $count_query);
 $row = mysqli_fetch_assoc($result);
 $total_students = $row['total'];
+
+// Query to count total universities
+$university_count_query = "SELECT COUNT(*) as total FROM universities";
+$university_result = mysqli_query($link, $university_count_query);
+$university_row = mysqli_fetch_assoc($university_result);
+$total_universities = $university_row['total'];
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -160,7 +168,7 @@ $total_students = $row['total'];
             <i class="bi bi-building"></i>
             <h2>Universities</h2>
             <p>Total Universities</p>
-            <p>10</p>
+            <p><?php echo $total_universities; ?></p>
         </div>
         <div class="card courses">
             <i class="bi bi-book"></i>
