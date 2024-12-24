@@ -46,7 +46,8 @@ session_start();
         }
 
         #genderDropdownButton,
-        #statusDropdownButton {
+        #statusDropdownButton,
+        #universityDropdownButton {
             background-color: #0c5797; /* Blue background */
             color: white; /* White text */
             font-size: 16px; /* Slightly larger text */
@@ -59,15 +60,18 @@ session_start();
         /* Hover and Focus Effects for Buttons */
         #genderDropdownButton:hover,
         #statusDropdownButton:hover,
+        #universityDropdownButton:hover,
         #genderDropdownButton:focus,
-        #statusDropdownButton:focus {
+        #statusDropdownButton:focus,
+        #universityDropdownButton:focus {
             background-color: #2484c4; /* Darker blue on hover/focus */
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
         }
 
         /* Dropdown Menu Styling */
         #genderDropdownMenu,
-        #statusDropdownMenu {
+        #statusDropdownMenu,
+        #universityDropdownMenu {
             background-color: #f8f9fa; /* Light background */
             border: 1px solid #2484c4; /* Blue border */
             border-radius: 5px; /* Rounded corners */
@@ -75,7 +79,8 @@ session_start();
 
         /* Dropdown Items */
         #genderDropdownMenu .dropdown-item,
-        #statusDropdownMenu .dropdown-item {
+        #statusDropdownMenu .dropdown-item,
+        #universityDropdownMenu .dropdown-item {
             color: #333; /* Dark text */
             padding: 10px 15px; /* Comfortable padding */
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -83,7 +88,8 @@ session_start();
 
         /* Hover Effect for Dropdown Items */
         #genderDropdownMenu .dropdown-item:hover,
-        #statusDropdownMenu .dropdown-item:hover {
+        #statusDropdownMenu .dropdown-item:hover,
+        #universityDropdownMenu .dropdown-item:hover {
             background-color: #2484c4; /* Blue background on hover */
             color: white; /* White text on hover */
         }
@@ -100,7 +106,7 @@ session_start();
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card mb-5">
                 <div class="card-header">
                     <h4>Add Student
                         <a href="index.php" class="btn btn-back float-end">Back</a>
@@ -133,6 +139,8 @@ session_start();
                             <label for="address">Address</label>
                             <input type="text" name="address" id="address" class="form-control" required>
                         </div>
+
+                        <!--query so ke gi zemi site univer i ke gi ispecati so loop vo dropdown a kako value prakame university id koga zacuvuvame student-->
 
                         <div class="mb-3">
                             <label for="birth">Date of Birth</label>
@@ -185,6 +193,42 @@ session_start();
                             </div>
                         </div>
 
+                                    <!-- University Dropdown -->
+                <input type="hidden" name="university_id" id="universityInput">
+                <div class="mb-3">
+                    <label>University</label>
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-secondary dropdown-toggle"
+                            type="button"
+                            id="universityDropdownButton"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Select University
+                        </button>
+                        <ul class="dropdown-menu" id="universityDropdownMenu">
+                            <?php
+                            include('../db_conn/dbcon.php'); 
+
+                            if ($link) { 
+                                $query = "SELECT id, name FROM universities"; 
+                                $result = mysqli_query($link, $query);
+
+                                if ($result && mysqli_num_rows($result) > 0) {
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo '<li><a class="dropdown-item" href="#" data-value="' . $row['id'] . '">' . htmlspecialchars($row['name']) . '</a></li>';
+                                    }
+                                } else {
+                                    echo '<li><a class="dropdown-item" href="#" disabled>No Universities Found</a></li>';
+                                }
+                            } else {
+                                echo '<li><a class="dropdown-item" href="#" disabled>Database Connection Error</a></li>';
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+
                         <div class="mb-3">
                             <button type="submit" name="save_student" class="btn btn-save">Save Student</button>
                         </div>
@@ -197,24 +241,33 @@ session_start();
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-    // Dropdown initialization
+    // Dropdown initialization function
     function setupDropdown(dropdownMenuId, dropdownButtonId, hiddenInputId) {
         const dropdownMenu = document.getElementById(dropdownMenuId);
         const dropdownButton = document.getElementById(dropdownButtonId);
         const hiddenInput = document.getElementById(hiddenInputId);
 
+        // Event delegation to handle dynamically added dropdown items
         dropdownMenu.addEventListener("click", function (event) {
-            if (event.target.classList.contains("dropdown-item")) {
+            // Ensure we only handle clicks on dropdown items
+            if (event.target && event.target.classList.contains("dropdown-item")) {
                 event.preventDefault();
-                const selectedValue = event.target.getAttribute("data-value");
-                dropdownButton.textContent = `Selected: ${selectedValue}`;
-                hiddenInput.value = selectedValue;
+                
+                const selectedValue = event.target.getAttribute("data-value"); // Get the ID
+                const selectedText = event.target.innerText; // Get the displayed name (use innerText for better cross-browser consistency)
+
+                dropdownButton.innerText = selectedText; // Update button with the selected name
+                hiddenInput.value = selectedValue; // Update hidden input with the selected ID
             }
         });
     }
 
-    // Initialize dropdowns
+    // Initialize the university dropdown
+    setupDropdown("universityDropdownMenu", "universityDropdownButton", "universityInput");
+
+    // Example: Initialize other dropdowns (gender and status dropdowns)
     setupDropdown("genderDropdownMenu", "genderDropdownButton", "genderInput");
     setupDropdown("statusDropdownMenu", "statusDropdownButton", "statusInput");
 </script>

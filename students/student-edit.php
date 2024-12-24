@@ -54,7 +54,7 @@ require '../db_conn/dbcon.php';
 
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card mb-5">
                     <div class="card-header">
                         <h4>Student Edit 
                             <a href="index.php" class="btn btn-back float-end">Back</a>

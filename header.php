@@ -102,7 +102,7 @@ $username = $isLoggedIn ? $_SESSION["username"] : null;
                     <a class="nav-link" href="/php/students/index.php">Students</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Portfolio</a>
+                    <a class="nav-link" href="/php/universities/index.php">Universities</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Team</a>
