@@ -42,7 +42,7 @@ require '../db_conn/dbcon.php';
                         <a href="index.php" class="btn btn-back float-end">Back</a>
                     </h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body ">
                     <?php
                     if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
                         $student_id = $_GET['id'];
