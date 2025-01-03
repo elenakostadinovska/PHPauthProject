@@ -27,18 +27,16 @@ $data = json_decode($response, true);
 <html>
 <head>
     <title>University Data</title>
-    <link href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.table').DataTable();
-        });
-    </script>
+    <!-- Include DataTables CSS -->
+   
 </head>
 <body>
+<?php include '../header.php'; ?>
 
-<table class="table" id="universityTable">
+<h1>University Data</h1>
+
+<!-- University Data Table -->
+<table id="universityTable" class="display" style="width:100%">
     <thead>
         <tr>
             <th>#</th>
@@ -67,6 +65,18 @@ $data = json_decode($response, true);
         ?>
     </tbody>
 </table>
+<?php include '../footer.php'; ?>
 
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- Include DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Initialize DataTables for the table with ID universityTable
+            $('#universityTable').DataTable();
+        });
+    </script>
 </body>
 </html>
